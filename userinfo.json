@@ -1,0 +1,6 @@
+{
+	"adId": "adIdon10charsAndMore",
+	"optins": [
+		{ "type": "USER_DATA", "value": true }
+	]
+}
