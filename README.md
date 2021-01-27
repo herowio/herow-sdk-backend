@@ -15,6 +15,12 @@ $> npm install
 $> npm start
 ```
 
+### Or with docker
+
+```
+$> docker run -ti --rm -p 8080:8080 ghcr.io/herowio/herow-sdk-backend
+```
+
 ## We provide several API
 
 ### Retrieving an access_token
