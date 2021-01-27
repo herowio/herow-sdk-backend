@@ -4,16 +4,16 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/auth/authorize/token', (req, res) => {
-    
+
     // those fields are mandatory
-    var client_id = req.query.client_id;
-    var client_secret = req.query.client_secret;
-    var grant_type = req.query.grant_type; // password
-    var username = req.query.username;
-    var password = req.query.password;
+    var client_id = req.body.client_id;
+    var client_secret = req.body.client_secret;
+    var grant_type = req.body.grant_type; // password
+    var username = req.body.username;
+    var password = req.body.password;
 
     if (client_id == null || client_secret == null) {
         return res.status(500).send("client_id and client_secret are mandatory.").end();

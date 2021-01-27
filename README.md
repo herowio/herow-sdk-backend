@@ -26,7 +26,7 @@ $> docker run -ti --rm -p 8080:8080 ghcr.io/herowio/herow-sdk-backend
 ### Retrieving an access_token
 
 ```
-▶ http POST http://localhost:8080/auth/authorize/token\?client_id\=test\&client_secret\=test\&grant_type\=password\&username\=test\&password\=test
+▶ http POST http://localhost:8080/auth/authorize/token client_id=test client_secret=test grant_type=password username=test password=test
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 73
