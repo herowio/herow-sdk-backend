@@ -1,10 +1,15 @@
 'use strict';
-
+const util = require('util');
 const express = require('express');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+    console.log('>>>>> ' + req.url + '\n- headers: ' + util.inspect(req.headers, false, null, true /* enable colors */) + ' \n- body: ' + util.inspect(req.body, false, null, true /* enable colors */) );
+    next();
+    console.log('<<<<< ' + 'status: ' + res.statusCode);
+});
 
 app.post('/auth/authorize/token', (req, res) => {
 
@@ -207,8 +212,8 @@ app.get("/v2/sdk/config", (req, res) => {
     var now = new Date();
     res.status(200).set({
         'X-Ref-Date': now.toUTCString(),
-        'X-Cache-Last-Modified': new Date(now.getTime() - 5 * 60 * 1000), // cache is outdated
-        'Last-Modified': new Date(now.getTime() - 60 * 60 * 1000),
+        'X-Cache-Last-Modified': new Date(now.getTime() - 5 * 60 * 1000).toUTCString(), // cache is outdated
+        'Last-Modified': new Date(now.getTime() - 60 * 60 * 1000).toUTCString(),
     }).send({
         "cacheInterval": 10800000,
         "configInterval": 600000,
