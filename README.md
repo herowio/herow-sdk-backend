@@ -175,7 +175,7 @@ X-Powered-By: Express
 ### Pushing LOG
 
 ```
-▶ http POST http://localhost:8080/stat/queue/multi x-device-id:test x-herow-id:test x-sdk:test "Authorization: OAuth test"
+▶ http POST http://localhost:8080/stat/queue x-device-id:test x-herow-id:test x-sdk:test "Authorization: OAuth test" < log_context.json
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 0
@@ -191,8 +191,8 @@ X-Ref-Date: Sat, 23 Jan 2021 13:26:41 GMT
 
 Generated every time a new location is detected
 
-{
 ```
+{
     "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
     "app_state":"bg",
         "lastLocation": {

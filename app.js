@@ -39,7 +39,7 @@ app.post('/auth/authorize/token', (req, res) => {
     }).end();
 });
 
-app.post("/stat/queue/multi", (req, res) => {
+app.post("/stat/queue", (req, res) => {
     if (req.get("Authorization") == null) {
         return res.status(401).send("Authentization OAuth <accessToken> is mandatory.").end();
     }
