@@ -185,7 +185,7 @@ X-Powered-By: Express
 X-Ref-Date: Sat, 23 Jan 2021 13:26:41 GMT
 ```
 
-## Several LOG
+## LOG format
 
 ### CONTEXT
 
@@ -193,40 +193,43 @@ Generated every time a new location is detected
 
 ```
 {
-    "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
-    "app_state":"bg",
-        "lastLocation": {
-        "speed":1.878,
-        "horizontalAccuracy":29.0,
-        "lng":3.8957527742527014,
-        "lat":49.371630160712314,
-        "timestamp":1611664821655
-    },
-    "lib_version":"7.0.0",
-    "date":1611664821655,
-    "herow_id":"5f1948e9bcac7b2d2a46f45d",
-    "nearbyPois":
-    [
-        {
-            "id":"2000480482",
-            "distance":522.2006007033652,
-            "tags":["frsupermarket"]
-        }
-    ],
-    "nearby_places":
-    [
-        {
-            "lng":3.8958851696425416,
-            "lat":49.371328458888385,
-            "place_id":"1qnn4irqfmghs",
-            "distance":34.90530795095254,
-            "radius":300.0
-        }
-    ],
-    "application_name":"herow",
-    "application_version":"3.3.0",
-    "subtype":"CONTEXT",
-    "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518"
+    "t": "app_mobile",
+    "data": {
+        "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
+        "app_state":"bg",
+            "lastLocation": {
+            "speed":1.878,
+            "horizontalAccuracy":29.0,
+            "lng":3.8957527742527014,
+            "lat":49.371630160712314,
+            "timestamp":1611664821655
+        },
+        "lib_version":"7.0.0",
+        "date":1611664821655,
+        "herow_id":"5f1948e9bcac7b2d2a46f45d",
+        "nearbyPois":
+        [
+            {
+                "id":"2000480482",
+                "distance":522.2006007033652,
+                "tags":["frsupermarket"]
+            }
+        ],
+        "nearby_places":
+        [
+            {
+                "lng":3.8958851696425416,
+                "lat":49.371328458888385,
+                "place_id":"1qnn4irqfmghs",
+                "distance":34.90530795095254,
+                "radius":300.0
+            }
+        ],
+        "application_name":"herow",
+        "application_version":"3.3.0",
+        "subtype":"CONTEXT",
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518"
+    }
 }
 ```
 
@@ -236,40 +239,43 @@ Generated when "tracking mode" is enabled
 
 ```
 {
-    "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
-    "app_state":"bg",
-        "lastLocation": {
-        "speed":1.878,
-        "horizontalAccuracy":29.0,
-        "lng":3.8957527742527014,
-        "lat":49.371630160712314,
-        "timestamp":1611664821655
-    },
-    "lib_version":"7.0.0",
-    "date":1611664821655,
-    "herow_id":"5f1948e9bcac7b2d2a46f45d",
-    "nearbyPois":
-    [
-        {
-            "id":"2000480482",
-            "distance":522.2006007033652,
-            "tags":["frsupermarket"]
-        }
-    ],
-    "nearby_places":
-    [
-        {
-            "lng":3.8958851696425416,
-            "lat":49.371328458888385,
-            "place_id":"1qnn4irqfmghs",
-            "distance":34.90530795095254,
-            "radius":300.0
-        }
-    ],
-    "application_name":"herow",
-    "application_version":"3.3.0",
-    "subtype":"CONTEXT_REALTIME",
-    "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518"
+    "t": "app_mobile",
+    "data": {
+        "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
+        "app_state":"bg",
+            "lastLocation": {
+            "speed":1.878,
+            "horizontalAccuracy":29.0,
+            "lng":3.8957527742527014,
+            "lat":49.371630160712314,
+            "timestamp":1611664821655
+        },
+        "lib_version":"7.0.0",
+        "date":1611664821655,
+        "herow_id":"5f1948e9bcac7b2d2a46f45d",
+        "nearbyPois":
+        [
+            {
+                "id":"2000480482",
+                "distance":522.2006007033652,
+                "tags":["frsupermarket"]
+            }
+        ],
+        "nearby_places":
+        [
+            {
+                "lng":3.8958851696425416,
+                "lat":49.371328458888385,
+                "place_id":"1qnn4irqfmghs",
+                "distance":34.90530795095254,
+                "radius":300.0
+            }
+        ],
+        "application_name":"herow",
+        "application_version":"3.3.0",
+        "subtype":"CONTEXT_REALTIME",
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518"
+    }
 }
 ```
 
@@ -279,28 +285,31 @@ Sent when a entering zone is detected.
 
 ```
 {
-    "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
-    "app_state":"bg",
-    "lastLocation": {
-        "speed":1.878,
-        "horizontalAccuracy":29.0,
-        "lng":3.8957527742527014,
-        "lat":49.371630160712314,
-        "timestamp":1611664821655
-    },
-    "lib_version":"7.0.0",
-    "date":1611664821655,
-    "herow_id":"5f1948e9bcac7b2d2a46f45d",
-    "application_name":"herow",
-    "application_version":"3.3.0",
-    "subtype":"GEOFENCE_ENTER",
-    "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
-    "place": {
-            "lng":3.8958851696425416,
-            "lat":49.371328458888385,
-            "place_id":"1qnn4irqfmghs",
-            "distance":34.90530795095254,
-            "radius":300.0
+    "t": "app_mobile",
+    "data": {
+        "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
+        "app_state":"bg",
+        "lastLocation": {
+            "speed":1.878,
+            "horizontalAccuracy":29.0,
+            "lng":3.8957527742527014,
+            "lat":49.371630160712314,
+            "timestamp":1611664821655
+        },
+        "lib_version":"7.0.0",
+        "date":1611664821655,
+        "herow_id":"5f1948e9bcac7b2d2a46f45d",
+        "application_name":"herow",
+        "application_version":"3.3.0",
+        "subtype":"GEOFENCE_ENTER",
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
+        "place": {
+                "lng":3.8958851696425416,
+                "lat":49.371328458888385,
+                "place_id":"1qnn4irqfmghs",
+                "distance":34.90530795095254,
+                "radius":300.0
+        }
     }
 }
 ```
@@ -311,28 +320,31 @@ Sent when a exiting zone is detected.
 
 ```
 {
-    "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
-    "app_state":"bg",
-        "lastLocation": {
-        "speed":1.878,
-        "horizontalAccuracy":29.0,
-        "lng":3.8957527742527014,
-        "lat":49.371630160712314,
-        "timestamp":1611664821655
-    },
-    "lib_version":"7.0.0",
-    "date":1611664821655,
-    "herow_id":"5f1948e9bcac7b2d2a46f45d",
-    "application_name":"herow",
-    "application_version":"3.3.0",
-    "subtype":"GEOFENCE_EXIT",
-    "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
-    "place": {
-            "lng":3.8958851696425416,
-            "lat":49.371328458888385,
-            "place_id":"1qnn4irqfmghs",
-            "distance":34.90530795095254,
-            "radius":300.0
+    "t": "app_mobile",
+    "data": {
+        "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
+        "app_state":"bg",
+            "lastLocation": {
+            "speed":1.878,
+            "horizontalAccuracy":29.0,
+            "lng":3.8957527742527014,
+            "lat":49.371630160712314,
+            "timestamp":1611664821655
+        },
+        "lib_version":"7.0.0",
+        "date":1611664821655,
+        "herow_id":"5f1948e9bcac7b2d2a46f45d",
+        "application_name":"herow",
+        "application_version":"3.3.0",
+        "subtype":"GEOFENCE_EXIT",
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
+        "place": {
+                "lng":3.8958851696425416,
+                "lat":49.371328458888385,
+                "place_id":"1qnn4irqfmghs",
+                "distance":34.90530795095254,
+                "radius":300.0
+        }
     }
 }
 ```
@@ -346,23 +358,26 @@ This duration is a calculated time between the GEOFENCE_ENTER and GEOFENCE_EXIT 
 
 ```
 {
-    "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
-    "app_state":"bg",
-        "lastLocation": {
-        "speed":1.878,
-        "horizontalAccuracy":29.0,
-        "lng":3.8957527742527014,
-        "lat":49.371630160712314,
-        "timestamp":1611664821655
-    },
-    "lib_version":"7.0.0",
-    "date":1611664821655,
-    "herow_id":"5f1948e9bcac7b2d2a46f45d",
-    "application_name":"herow",
-    "application_version":"3.3.0",
-    "subtype":"VISIT",
-    "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
-    "place_id": "1qnn4irqfmghs",
-    "duration": 1000
+    "t": "app_mobile",
+    "data": {
+        "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
+        "app_state":"bg",
+            "lastLocation": {
+            "speed":1.878,
+            "horizontalAccuracy":29.0,
+            "lng":3.8957527742527014,
+            "lat":49.371630160712314,
+            "timestamp":1611664821655
+        },
+        "lib_version":"7.0.0",
+        "date":1611664821655,
+        "herow_id":"5f1948e9bcac7b2d2a46f45d",
+        "application_name":"herow",
+        "application_version":"3.3.0",
+        "subtype":"VISIT",
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
+        "place_id": "1qnn4irqfmghs",
+        "duration": 1000
+    }
 }
 ```
