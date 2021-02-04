@@ -349,7 +349,7 @@ Sent when a exiting zone is detected.
 }
 ```
 
-### VISIT
+### GEOFENCE_VISIT
 
 Sent when a exiting zone is detected.
 
@@ -374,7 +374,7 @@ This duration is a calculated time between the GEOFENCE_ENTER and GEOFENCE_EXIT 
         "herow_id":"5f1948e9bcac7b2d2a46f45d",
         "application_name":"herow",
         "application_version":"3.3.0",
-        "subtype":"VISIT",
+        "subtype":"GEOFENCE_VISIT",
         "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
         "place_id": "1qnn4irqfmghs",
         "duration": 1000
