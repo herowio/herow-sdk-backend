@@ -49,16 +49,16 @@ X-Powered-By: Express
 ▶ http PUT http://localhost:8080/v2/sdk/userinfo x-device-id:test x-sdk:test "Authorization: OAuth test" < userinfo.json
 HTTP/1.1 200 OK
 Connection: keep-alive
-Content-Length: 65
+Content-Length: 52
 Content-Type: application/json; charset=utf-8
-Date: Sat, 23 Jan 2021 13:24:44 GMT
-ETag: W/"41-g2MG4pP/TrmEWL2e0KqmbvgORJA"
+Date: Fri, 12 Feb 2021 16:06:47 GMT
+ETag: W/"34-IWUMkqB36H/NZo2fOjKEkVTz4hE"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
 {
     "herowId": "rtegflkgt",
-    "modifiedDate": "2021-01-23T13:24:44.795Z"
+    "modifiedDate": 1613146007941
 }
 ```
 

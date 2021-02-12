@@ -90,7 +90,7 @@ app.put("/v2/sdk/userinfo", (req, res) => {
 
     res.status(200).send({
         "herowId": (req.get("x-herow-id") != null) ? req.get("x-herow-id") : "rtegflkgt",
-        "modifiedDate": new Date()
+        "modifiedDate": new Date().getTime()
     }).end();
 });
 
