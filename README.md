@@ -161,7 +161,7 @@ X-Powered-By: Express
                 "id": "6004957256eb6779115b6d8a",
                 "name": "HEROW"
             },
-            "campaigns": [],
+            "campaigns": ["6009ff7c89bfa239ecce712e"],
             "hash": "ivbxbhxm8rnk",
             "lat": 48.875741,
             "liveEvent": true,

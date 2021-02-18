@@ -180,7 +180,7 @@ app.get("/v2/sdk/cache/content/:geohash", (req, res) => {
                     "id": "6004957256eb6779115b6d8a",
                     "name": "HEROW"
                 },
-                "campaigns": [],
+                "campaigns": ["6009ff7c89bfa239ecce712e"],
                 "hash": "ivbxbhxm8rnk",
                 "lat": 48.875741,
                 "liveEvent": true,
