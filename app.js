@@ -56,6 +56,14 @@ app.post("/stat/queue", (req, res) => {
         return res.status(500).send("x-sdk header is mandatory.").end();
     }
 
+    if (req.body.t != "app_mobile") {
+        return res.status(400).send("t have to be set to app_mobile.").end();
+    }
+
+    if (!req.body.data) {
+        return res.status(400).send("payload have to contain data object field.").end();
+    }
+
     res.status(200).set('X-Ref-Date', new Date().toUTCString()).send().end();
 });
 
