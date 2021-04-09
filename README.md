@@ -197,7 +197,7 @@ Generated every time a new location is detected
     "data": {
         "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
         "app_state":"bg",
-            "lastLocation": {
+        "lastLocation": {
             "speed":1.878,
             "horizontalAccuracy":29.0,
             "lng":3.8957527742527014,
@@ -243,7 +243,7 @@ Generated when "tracking mode" is enabled
     "data": {
         "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
         "app_state":"bg",
-            "lastLocation": {
+        "lastLocation": {
             "speed":1.878,
             "horizontalAccuracy":29.0,
             "lng":3.8957527742527014,
@@ -324,7 +324,7 @@ Sent when a exiting zone is detected.
     "data": {
         "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
         "app_state":"bg",
-            "lastLocation": {
+        "lastLocation": {
             "speed":1.878,
             "horizontalAccuracy":29.0,
             "lng":3.8957527742527014,
@@ -362,7 +362,7 @@ This duration is a calculated time between the GEOFENCE_ENTER and GEOFENCE_EXIT 
     "data": {
         "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
         "app_state":"bg",
-            "lastLocation": {
+        "lastLocation": {
             "speed":1.878,
             "horizontalAccuracy":29.0,
             "lng":3.8957527742527014,
