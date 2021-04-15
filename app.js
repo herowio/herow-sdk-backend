@@ -20,6 +20,14 @@ app.post('/auth/authorize/token', (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
 
+    if (req.get("x-sdk") == null) {
+        return res.status(500).send("x-sdk header is mandatory.").end();
+    }
+
+    if (req.get("x-version") == null) {
+        return res.status(500).send("x-version header is mandatory.").end();
+    }
+
     if (client_id == null || client_secret == null) {
         return res.status(500).send("client_id and client_secret are mandatory.").end();
     }
@@ -54,6 +62,10 @@ app.post("/stat/queue", (req, res) => {
 
     if (req.get("x-sdk") == null) {
         return res.status(500).send("x-sdk header is mandatory.").end();
+    }
+
+    if (req.get("x-version") == null) {
+        return res.status(500).send("x-version header is mandatory.").end();
     }
 
     if (req.body.t != "app_mobile") {
@@ -96,6 +108,10 @@ app.put("/v2/sdk/userinfo", (req, res) => {
         return res.status(500).send("x-sdk header is mandatory.").end();
     }
 
+    if (req.get("x-version") == null) {
+        return res.status(500).send("x-version header is mandatory.").end();
+    }
+
     res.status(200).send({
         "herowId": (req.get("x-herow-id") != null) ? req.get("x-herow-id") : "rtegflkgt",
         "modifiedDate": new Date().getTime()
@@ -123,6 +139,10 @@ app.get("/v2/sdk/cache/content/:geohash", (req, res) => {
 
     if (req.get("x-sdk") == null) {
         return res.status(500).send("x-sdk header is mandatory.").end();
+    }
+
+    if (req.get("x-version") == null) {
+        return res.status(500).send("x-version header is mandatory.").end();
     }
 
     res.status(200).send({
@@ -215,6 +235,10 @@ app.get("/v2/sdk/config", (req, res) => {
 
     if (req.get("x-sdk") == null) {
         return res.status(500).send("x-sdk header is mandatory.").end();
+    }
+
+    if (req.get("x-version") == null) {
+        return res.status(500).send("x-version header is mandatory.").end();
     }
 
     var now = new Date();

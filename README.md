@@ -26,7 +26,7 @@ $> docker run -ti --rm -p 8080:8080 ghcr.io/herowio/herow-sdk-backend
 ### Retrieving an access_token
 
 ```
-▶ http POST http://localhost:8080/auth/authorize/token client_id=test client_secret=test grant_type=password username=test password=test
+▶ http POST http://localhost:8080/auth/authorize/token client_id=test client_secret=test grant_type=password username=test password=test x-version:7.0 x-sdk:test
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 73
@@ -46,7 +46,7 @@ X-Powered-By: Express
 ### Sending user informations
 
 ```
-▶ http PUT http://localhost:8080/v2/sdk/userinfo x-device-id:test x-sdk:test "Authorization: OAuth test" < userinfo.json
+▶ http PUT http://localhost:8080/v2/sdk/userinfo x-device-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test" < userinfo.json
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 52
@@ -65,7 +65,7 @@ X-Powered-By: Express
 ### Getting configuration
 
 ```
-▶ http GET http://localhost:8080/v2/sdk/config x-device-id:test x-herow-id:test x-sdk:test "Authorization: OAuth test"
+▶ http GET http://localhost:8080/v2/sdk/config x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test"
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 65
@@ -88,7 +88,7 @@ X-Ref-Date: Sat, 23 Jan 2021 13:25:32 GMT
 ### Getting cache
 
 ```
-▶ http GET http://localhost:8080/v2/sdk/cache/content/test x-device-id:test x-herow-id:test x-sdk:test "Authorization: OAuth test"
+▶ http GET http://localhost:8080/v2/sdk/cache/content/test x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test"
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 896
@@ -175,7 +175,7 @@ X-Powered-By: Express
 ### Pushing LOG
 
 ```
-▶ http POST http://localhost:8080/stat/queue x-device-id:test x-herow-id:test x-sdk:test "Authorization: OAuth test" < log_context.json
+▶ http POST http://localhost:8080/stat/queue x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test" < log_context.json
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 0
