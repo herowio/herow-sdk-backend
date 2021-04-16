@@ -1,10 +1,11 @@
 'use strict';
 const util = require('util');
+var compression = require('compression')
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
     console.log('>>>>> ' + req.url + '\n- headers: ' + util.inspect(req.headers, false, null, true /* enable colors */) + ' \n- body: ' + util.inspect(req.body, false, null, true /* enable colors */) );
     next();
