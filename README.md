@@ -1,29 +1,117 @@
-# Herow SDK Test Backend
+# Herow SDK Backend
 
-## What is it?
+[HSB is the SDK backside](https://github.com/herowio/herow-sdk-ios) helping us to save the world.
 
-This is a dummy server implementation for the HEROW SDK.
+It includes several api to interact with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
 
-It help developers to test locally by providing a mocked API :) 
+![let's go save the world](https://media.giphy.com/media/26BRxBeok96wnAwpy/source.gif)
 
-![test](https://media.giphy.com/media/l46Cbqvg6gxGvh2PS/giphy.gif)
+## How to dev it?
 
-## How to run it?
+You should install `redis` before and set up it on `127.0.0.1`.
+
+```
+$> brew install redis
+```
+
+`node` is also needed, we use `v15.14.0` but should work with lower version.
+
+```
+$> brew install node
+```
+
+After that, install dependencies and run tests
 
 ```
 $> npm install
+$> npm test
+```
+
+## How to run it?
+
+Locally, you just have
+
+```
 $> npm start
 ```
 
-### Or with docker
+## … or with docker
 
 ```
-$> docker run -ti --rm -p 8080:8080 ghcr.io/herowio/herow-sdk-backend
+$> docker-compose up
 ```
 
-## We provide several API
+Inject the only one needed data
 
-### Retrieving an access_token
+```
+$> docker-compose exec redis redis-cli
+127.0.0.1:6379> SET d52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df client
+OK
+```
+
+This key allows you to communicate with the api by using SDK side :
+
+- client_id: test
+- client_secret: test
+- username: test
+- password: test
+
+# Redis interactions
+
+We massively use Redis as database.
+It contains dedicated keys as you can see above.
+
+## identity key
+
+This key allows to match an SDK instance to a `client`. You can create any client as needed, a dedicated key for SDK Android and SDK iOS, etc.
+
+This part ensure that an untrusted SDK can not interact with your backend.
+
+We need 4+1 informations :
+
+| key | description | example |
+| --- | ----------- | ------- |
+| client_id | a human readable key | my-dedicated-sdk-on-android |
+| client_secret | a secret given to a trusted sdk | 54trtk4zEr@ |
+| username | a dedicated account allowing to use the app | appdemo |
+| password | a dedicated password | rtFGHG6$ |
+
+The 5th element is a salt used to hash those informations:
+
+`sha256(SALT, client_id@client_secret@username@password)`
+
+`TOKEN_SALT` envars is used to override salt key.
+
+The generated key is stored on redis and value is an arbitrary client's name.
+
+## token key
+
+Every time an SDK generates a token, it is stored with key `token:<token>` and associated with `client`'s name (see above)
+
+## last-modified-cache key
+
+The SDK regularly pulls its configuration.
+When cache seems oudated, we can use the key `last-modified-cache:<client>` to order a cache refresh.
+
+`last-modified-cache:<client>` contains timestamp in milliseconds of the last cache update. SDK will decide if it have to refresh it.
+
+## campaigns key
+
+`campaigns:<client>` contains an array of campaigns associated to a given client. If this key is modified, we also should upgrade `last-modified-cache:<client>`.
+
+## zones key
+
+`zones:<client>:<geohash>` contains an array of "zones" dedicated to a client and to a specific area. [Geohash](https://fr.wikipedia.org/wiki/Geohash) is a 4 digits geocoding code used to parcel the world on 20kmx20km squares. If this key is modified, we also should upgrade `last-modified-cache:<client>`.
+
+## pois key
+
+`pois:<geohash>` contains a array of "pois" for a given area. Content is shared with every client.
+
+# API details
+
+![you're my god damn hero](https://media.giphy.com/media/Sv0uzXvg8svM4/source.gif)
+
+## Retrieving an access_token
 
 ```
 ▶ http POST http://localhost:8080/auth/authorize/token client_id=test client_secret=test grant_type=password username=test password=test x-version:7.0 x-sdk:test
@@ -38,12 +126,11 @@ X-Powered-By: Express
 
 {
     "accessToken": "15RUVomOGl",
-    "expiresIn": 3600,
-    "refreshToken": "hvGoXOZKNs"
+    "expiresIn": 3600
 }
 ```
 
-### Sending user informations
+## Sending user informations
 
 ```
 ▶ http PUT http://localhost:8080/v2/sdk/userinfo x-device-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test" < userinfo.json
@@ -57,12 +144,11 @@ Keep-Alive: timeout=5
 X-Powered-By: Express
 
 {
-    "herowId": "rtegflkgt",
-    "modifiedDate": 1613146007941
+    "herowId": "rtegflkgt"
 }
 ```
 
-### Getting configuration
+## Getting configuration
 
 ```
 ▶ http GET http://localhost:8080/v2/sdk/config x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test"
@@ -85,7 +171,7 @@ X-Ref-Date: Sat, 23 Jan 2021 13:25:32 GMT
 }
 ```
 
-### Getting cache
+## Getting cache
 
 ```
 ▶ http GET http://localhost:8080/v2/sdk/cache/content/test x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test"
@@ -172,7 +258,7 @@ X-Powered-By: Express
 }
 ```
 
-### Pushing LOG
+## Pushing LOG
 
 ```
 ▶ http POST http://localhost:8080/stat/queue x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test" < log_context.json

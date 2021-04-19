@@ -1,14 +1,14 @@
 {
   "name": "herow-sdk-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "node backend for herow-sdk-(android|ios)",
+  "main": "server.js",
   "engines": {
     "node": ">=8.0.0"
   },
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "tap --reporter=list --watch"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,14 @@
   "author": "smaucourt@gmail.com",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "compression": "^1.7.4",
-    "express": "^4.17.1"
+    "fastify": "^3.14.2",
+    "fastify-auth": "^1.1.0",
+    "fastify-compress": "^3.4.2",
+    "fastify-redis": "^4.3.0"
+  },
+  "devDependencies": {
+    "ioredis-mock": "^5.5.2",
+    "pino-pretty": "^4.7.1",
+    "tap": "^15.0.2"
   }
 }

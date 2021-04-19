@@ -1,0 +1,8 @@
+{
+    "name": "herow-sdk-backend",
+    "description": "A backend for HEROW SDK",
+    "website": "https://www.herow.io",
+    "repository": "https://github.com/herowio/herow-sdk-backend",
+    "keywords": ["sdk", "backend", "herow"],
+    "image": "heroku/nodejs"
+}

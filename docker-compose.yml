@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+    sdk:
+        build: .
+        ports:
+            - 8080:8080
+        links:
+            - redis
+        environment: 
+            - TOKEN_SALT=secret
+            - REDIS_URL=redis
+    redis:
+        image: redis
+        ports:
+            - 6379:6379
