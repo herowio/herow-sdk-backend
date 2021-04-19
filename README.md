@@ -1,6 +1,6 @@
 # Herow SDK Backend
 
-[HSB is the SDK backside](https://github.com/herowio/herow-sdk-ios) helping us to save the world.
+[HSB is the SDK backside](https://github.com/herowio/herow-sdk-backend) helping us to save the world.
 
 It includes several api to interact with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
 
@@ -292,7 +292,6 @@ Generated every time a new location is detected
         },
         "lib_version":"7.0.0",
         "date":1611664821655,
-        "herow_id":"5f1948e9bcac7b2d2a46f45d",
         "nearbyPois":
         [
             {
@@ -338,7 +337,6 @@ Generated when "tracking mode" is enabled
         },
         "lib_version":"7.0.0",
         "date":1611664821655,
-        "herow_id":"5f1948e9bcac7b2d2a46f45d",
         "nearbyPois":
         [
             {
@@ -384,7 +382,6 @@ Sent when a entering zone is detected.
         },
         "lib_version":"7.0.0",
         "date":1611664821655,
-        "herow_id":"5f1948e9bcac7b2d2a46f45d",
         "application_name":"herow",
         "application_version":"3.3.0",
         "subtype":"GEOFENCE_ENTER",
@@ -419,7 +416,6 @@ Sent when a exiting zone is detected.
         },
         "lib_version":"7.0.0",
         "date":1611664821655,
-        "herow_id":"5f1948e9bcac7b2d2a46f45d",
         "application_name":"herow",
         "application_version":"3.3.0",
         "subtype":"GEOFENCE_EXIT",
@@ -457,13 +453,70 @@ This duration is a calculated time between the GEOFENCE_ENTER and GEOFENCE_EXIT 
         },
         "lib_version":"7.0.0",
         "date":1611664821655,
-        "herow_id":"5f1948e9bcac7b2d2a46f45d",
         "application_name":"herow",
         "application_version":"3.3.0",
         "subtype":"GEOFENCE_VISIT",
         "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
         "place_id": "1qnn4irqfmghs",
         "duration": 1000
+    }
+}
+```
+
+### GEOFENCE_ZONE_NOTIFICATION
+
+Sent when a notification is displayed.
+
+```
+{
+    "t": "app_mobile",
+    "data": {
+        "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
+        "app_state":"bg",
+        "lastLocation": {
+            "speed":1.878,
+            "horizontalAccuracy":29.0,
+            "lng":3.8957527742527014,
+            "lat":49.371630160712314,
+            "timestamp":1611664821655
+        },
+        "lib_version":"7.1.0",
+        "date":1611664821655,
+        "application_name":"herow",
+        "application_version":"3.3.0",
+        "subtype":"GEOFENCE_ZONE_NOTIFICATION",
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
+        "place": {
+                "lng":3.8958851696425416,
+                "lat":49.371328458888385,
+                "place_id":"1qnn4irqfmghs",
+                "distance":634.90530795095254,
+                "radius":300.0
+        },
+        "campaign_id": "6009ff7c89bfa239ecce712e",
+        "techno_hash": "1qnn4irqfmghs"
+    }
+}
+```
+
+### REDIRECT
+
+Sent when a notification is opened _(click on it)_.
+
+```
+{
+    "t": "app_mobile",
+    "data": {
+        "phone_id":"98861604-512E-4958-8355-8E4EAFDD183D",
+        "app_state":"bg",
+        "lib_version":"7.1.0",
+        "date":1611664821655,
+        "application_name":"herow",
+        "application_version":"3.3.0",
+        "subtype":"REDIRECT",
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
+        "campaign_id": "6009ff7c89bfa239ecce712e",
+        "techno_hash": "1qnn4irqfmghs"
     }
 }
 ```
