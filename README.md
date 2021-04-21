@@ -187,31 +187,27 @@ X-Powered-By: Express
 {
     "campaigns": [
         {
-            "begin": 1611187200000,
-            "company": "mycompany",
-            "createdDate": 1611267964009,
-            "deleted": false,
-            "id": "6009ff7c89bfa239ecce712e",
-            "intervals": [
-                {
-                    "end": 1611440772431,
-                    "start": 1611267972431
-                }
+            "id": "6012bae71b0c357454994f28",
+            "name": "HOME",
+            "begin": 1611792000000,
+            "end": 1619161212248,
+            "capping": {
+                "maxNumberNotifications": 3,
+                "minTimeBetweenTwoNotifications": 3600000
+            },
+            "daysRecurrence": [
+                "monday",
+                "wednesday",
+                "friday",
+                "saturday"
             ],
-            "modifiedDate": 1611267964683,
-            "name": "test",
+            "startHour": "09:00",
+            "stopHour": "19:45",
             "notification": {
-                "description": "welcome at herow.io",
-                "title": "Have a good day"
-            },
-            "recurrenceEnabled": false,
-            "simpleId": "6009ff7c89bfa239ecce712e",
-            "triggers": {
-                "dwellTime": 0,
-                "isPersistent": 1,
-                "onExit": 0
-            },
-            "tz": "Europe/Paris"
+                "title": "welcome home",
+                "description": "bon retour à la maison!",
+                "uri": "https://herow.io"
+            }
         }
     ],
     "pois": [
@@ -220,23 +216,7 @@ X-Powered-By: Express
             "lat": 48.84748,
             "lng": 2.35231,
             "tags": [
-                "frfastfood"
-            ]
-        },
-        {
-            "id": "7507039985",
-            "lat": 48.82764,
-            "lng": 2.32898,
-            "tags": [
-                "frfastfood"
-            ]
-        },
-        {
-            "id": "7496768686",
-            "lat": 48.8334,
-            "lng": 2.32431,
-            "tags": [
-                "frfastfood"
+                "fastfood"
             ]
         }
     ],
@@ -244,13 +224,11 @@ X-Powered-By: Express
         {
             "access": {
                 "address": "54 Rue de Paradis, 75010 Paris, France",
-                "id": "6004957256eb6779115b6d8a",
                 "name": "HEROW"
             },
             "campaigns": ["6009ff7c89bfa239ecce712e"],
             "hash": "ivbxbhxm8rnk",
             "lat": 48.875741,
-            "liveEvent": true,
             "lng": 2.349255,
             "radius": 300
         }
