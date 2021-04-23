@@ -114,7 +114,7 @@ When cache seems oudated, we can use the key `last-modified-cache:<client>` to o
 ## Retrieving an access_token
 
 ```
-▶ http POST http://localhost:8080/auth/authorize/token client_id=test client_secret=test grant_type=password username=test password=test x-version:7.0 x-sdk:test
+▶ http POST http://localhost:8080/auth/authorize/token clientId=test clientSecret=test grantType=password username=test password=test x-version:7.0 x-sdk:test
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 73

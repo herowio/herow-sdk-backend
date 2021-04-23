@@ -22,31 +22,31 @@ test('should accept authentication', async t => {
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', username: 'test', password: 'test', client_id: 'test', client_secret: 'test'},
+        payload: {grantType: 'password', username: 'test', password: 'test', clientId: 'test', clientSecret: 'test'},
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
     t.equal(response.statusCode, 200,  'with a status code 200')
 })
 
-test('should refuse authentication when client_secret is test2', async t => {
+test('should refuse authentication when clientSecret is test2', async t => {
 
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', username: 'test', password: 'test', client_id: 'test', client_secret: 'test2'},
+        payload: {grantType: 'password', username: 'test', password: 'test', clientId: 'test', clientSecret: 'test2'},
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
     t.equal(response.statusCode, 400, 'with a status code 400')
 })
 
-test('should refuse authentication when grant_type is missing', async t => {
+test('should refuse authentication when grantType is missing', async t => {
 
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {username: 'test', password: 'test', client_id: 'test', client_secret: 'test'},
+        payload: {username: 'test', password: 'test', clientId: 'test', clientSecret: 'test'},
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
@@ -58,7 +58,7 @@ test('should refuse authentication when username is missing', async t => {
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', password: 'test', client_id: 'test', client_secret: 'test'},
+        payload: {grantType: 'password', password: 'test', clientId: 'test', clientSecret: 'test'},
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
@@ -70,31 +70,31 @@ test('should refuse authentication when password is missing', async t => {
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', username: 'test', client_id: 'test', client_secret: 'test'},
+        payload: {grantType: 'password', username: 'test', clientId: 'test', clientSecret: 'test'},
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
     t.equal(response.statusCode, 400, 'with a status code 400')
 })
 
-test('should refuse authentication when client_id is missing', async t => {
+test('should refuse authentication when clientId is missing', async t => {
 
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', username: 'test', password: 'test', client_secret: 'test'},
+        payload: {grantType: 'password', username: 'test', password: 'test', clientSecret: 'test'},
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
     t.equal(response.statusCode, 400, 'with a status code 400')
 })
 
-test('should refuse authentication when client_secret is missing', async t => {
+test('should refuse authentication when clientSecret is missing', async t => {
 
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', username: 'test', password: 'test', client_id: 'test'},
+        payload: {grantType: 'password', username: 'test', password: 'test', clientId: 'test'},
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
@@ -106,7 +106,7 @@ test('should refuse authentication when x-version is missing', async t => {
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', username: 'test', password: 'test', client_id: 'test', client_secret: 'test'},
+        payload: {grantType: 'password', username: 'test', password: 'test', clientId: 'test', clientSecret: 'test'},
         headers: {'x-sdk': 'test'}
     })
 
@@ -118,7 +118,7 @@ test('should refuse authentication when x-sdk is missing', async t => {
     const response = await app.inject({
         method: 'POST',
         url: '/auth/authorize/token',
-        payload: {grant_type: 'password', username: 'test', password: 'test', client_id: 'test', client_secret: 'test'},
+        payload: {grantType: 'password', username: 'test', password: 'test', clientId: 'test', clientSecret: 'test'},
         headers: {'x-version': '7.0.0'}
     })
 

@@ -17,7 +17,7 @@ module.exports = async function (fastify, options) {
           username: { type: 'string' },
           password: { type: 'string' }
         },
-        required: [ 'client_id', 'client_secret', 'grant_type', 'username', 'password' ]
+        required: [ 'clientId', 'clientSecret', 'grantType', 'username', 'password' ]
       },
       headers: {
         type: 'object',
@@ -38,8 +38,8 @@ module.exports = async function (fastify, options) {
       }
     }
   }, async (req, res) => {
-    const client_id = req.body.client_id
-    const client_secret = req.body.client_secret
+    const client_id = req.body.clientId
+    const client_secret = req.body.clientSecret
     const username = req.body.username
     const password = req.body.password
 
