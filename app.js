@@ -18,7 +18,6 @@ function build(opts={}) {
             
             request.client = client
             request.log.debug('verifyOAuthToken - accessToken:' + accessToken + ' -> client:' + client)
-            done()
         })
         .decorateRequest('deviceId','')
         .decorateRequest('herowId','')
