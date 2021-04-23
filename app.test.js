@@ -254,7 +254,7 @@ test('should return herowId from informations when herowId is not given', async 
         method: 'PUT',
         url: '/v2/sdk/userinfo',
         headers: {'authorization': 'OAuth test', 'x-version': '7.0.0', 'x-sdk': 'test', 'x-device-id': 'test'},
-        payload: { adId: 'morethan10characters' }
+        payload: { adId: 'morethan10characters', customId: 'test' }
     })
 
     t.equal(response.statusCode, 200, 'with a status code 200')
@@ -279,7 +279,7 @@ test('should send log', async t => {
         method: 'POST',
         url: '/stat/queue',
         headers: {'authorization': 'OAuth test', 'x-version': '7.0.0', 'x-sdk': 'test', 'x-device-id': 'test', 'x-herow-id': 'test'},
-        payload: {t: "app_mobile", data:{phone_id:''}}
+        payload: {t: "app_mobile", data:{phone_id: "test"}}
     })
 
     t.equal(response.statusCode, 200, 'with a status code 200')
