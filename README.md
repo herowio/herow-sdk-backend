@@ -369,7 +369,8 @@ Sent when a entering zone is detected.
                 "lat":49.371328458888385,
                 "place_id":"1qnn4irqfmghs",
                 "distance":34.90530795095254,
-                "radius":300.0
+                "radius":300.0,
+                "confidence":0.456
         }
     }
 }
@@ -403,7 +404,8 @@ Sent when a exiting zone is detected.
                 "lat":49.371328458888385,
                 "place_id":"1qnn4irqfmghs",
                 "distance":34.90530795095254,
-                "radius":300.0
+                "radius":300.0,
+                "confidence":0.456
         }
     }
 }
@@ -469,7 +471,8 @@ Sent when a notification is displayed.
                 "lat":49.371328458888385,
                 "place_id":"1qnn4irqfmghs",
                 "distance":634.90530795095254,
-                "radius":300.0
+                "radius":300.0,
+                "confidence":0.456
         },
         "campaign_id": "6009ff7c89bfa239ecce712e",
         "techno_hash": "1qnn4irqfmghs"
