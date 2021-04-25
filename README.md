@@ -6,13 +6,7 @@ It includes several api to interact with [SDK iOS](https://github.com/herowio/he
 
 ![let's go save the world](https://media.giphy.com/media/26BRxBeok96wnAwpy/source.gif)
 
-## How to dev it?
-
-You should install `redis` before and set up it on `127.0.0.1`.
-
-```
-$> brew install redis
-```
+## How to test it?
 
 `node` is also needed, we use `v15.14.0` but should work with lower version.
 
@@ -27,18 +21,20 @@ $> npm install
 $> npm test
 ```
 
-## How to run it?
+## How to dev it?
 
-Locally, you just have
+`docker-compose` sets up Redis and Kafka.
 
-```
-$> npm start
-```
-
-## … or with docker
+Under MacOs, please update `KAFKA_ADVERTISED_HOST_NAME` with your local IP. _(localhost should work under Linux)_
 
 ```
 $> docker-compose up
+```
+
+and…
+
+```
+$> npm start
 ```
 
 Inject the only one needed data
@@ -87,6 +83,10 @@ The generated key is stored on redis and value is an arbitrary client's name.
 ## token key
 
 Every time an SDK generates a token, it is stored with key `token:<token>` and associated with `client`'s name (see above)
+
+## device key
+
+The SDK configuration _(IDFA, customId, optin)_ is stored on key `device:<deviceId>` during `USER_INFO_EXPIRATION` or 30 days.
 
 ## last-modified-cache key
 

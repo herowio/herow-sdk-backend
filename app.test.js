@@ -16,6 +16,7 @@ app.decorate('redis', new RedisMock({
         'pois:u7ge': '[ { "id": "1" } ]'
     }
 }) )
+app.decorate('kafka', { send: (log) => new Promise((resolve, revoke) => resolve() ) })
 
 test('should accept authentication', async t => {
 
