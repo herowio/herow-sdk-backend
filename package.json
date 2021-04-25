@@ -20,7 +20,8 @@
     "fastify": "^3.14.2",
     "fastify-auth": "^1.1.0",
     "fastify-compress": "^3.4.2",
-    "fastify-redis": "^4.3.0"
+    "fastify-redis": "^4.3.0",
+    "kafkajs": "^1.15.0"
   },
   "devDependencies": {
     "ioredis-mock": "^5.5.2",

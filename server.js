@@ -1,12 +1,22 @@
 'use strict'
 
-require('./app')
+const DEFAULT_HOST = '127.0.0.1'
+const DEFAULT_PORT = 8080
+
+const fastify = require('./app')
     ({ logger: true, level: 'info', prettyPrint: true })
-        .register(require('fastify-compress'))
-        .register(require('fastify-redis'), { host: process.env.REDIS_URL || '127.0.0.1', closeClient: true })
-        .listen(process.env.PORT || 8080, '0.0.0.0', function (err, _) {
+
+fastify
+    .register(require('fastify-redis'), { host: process.env.REDIS_URL || DEFAULT_HOST, closeClient: true })
+    .decorateRequest('kafka', {}).addHook('onReady', async () => {
+        const { Kafka } = require('kafkajs')
+        const producer = new Kafka({ clientId: 'herow-sdk-backend', brokers: (process.env.KAFKA_URL || DEFAULT_HOST + ':9092').split(',') }).producer()
+        await producer.connect()
+        fastify.kafka = producer
+    })
+    .listen(process.env.PORT || DEFAULT_PORT, '0.0.0.0', (err) => {
         if (err) {
             console.log(err)
             process.exit(1)
         }
-})
+    })

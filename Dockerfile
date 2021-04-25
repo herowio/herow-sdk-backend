@@ -1,4 +1,4 @@
-FROM library/node:13-alpine
+FROM library/node:15-alpine3.13
 COPY routes /routes
 COPY server.js /server.js
 COPY app.js /app.js
