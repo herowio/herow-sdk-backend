@@ -19,6 +19,12 @@ services:
         container_name: redis
         ports:
             - 6379:6379
+    redis-bootstrap:
+        build: data
+        depends_on:
+            - redis
+        environment:
+            - REDIS_URL=redis
     zookeeper:
         image: wurstmeister/zookeeper
         hostname: zookeeper

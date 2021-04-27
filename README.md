@@ -25,7 +25,7 @@ $> npm test
 
 `docker-compose` sets up Redis and Kafka.
 
-Under MacOs, please update `KAFKA_ADVERTISED_HOST_NAME` with your local IP. _(localhost should work under Linux)_
+Under macOs, please update `KAFKA_ADVERTISED_HOST_NAME` with your local IP. _(localhost should work under Linux)_
 
 ```
 $> docker-compose up
@@ -36,21 +36,6 @@ and…
 ```
 $> npm start
 ```
-
-Inject the only one needed data
-
-```
-$> docker-compose exec redis redis-cli
-127.0.0.1:6379> SET d52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df client
-OK
-```
-
-This key allows you to communicate with the api by using SDK side :
-
-- client_id: test
-- client_secret: test
-- username: test
-- password: test
 
 # Redis interactions
 
@@ -130,10 +115,12 @@ X-Powered-By: Express
 }
 ```
 
+`export ACCESS_TOKEN=15RUVomOGl`
+
 ## Sending user informations
 
 ```
-▶ http PUT http://localhost:8080/v2/sdk/userinfo x-device-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test" < userinfo.json
+▶ http PUT http://localhost:8080/v2/sdk/userinfo x-device-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}" < userinfo.json
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 52
@@ -151,7 +138,7 @@ X-Powered-By: Express
 ## Getting configuration
 
 ```
-▶ http GET http://localhost:8080/v2/sdk/config x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test"
+▶ http GET http://localhost:8080/v2/sdk/config x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}"
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 65
@@ -174,7 +161,7 @@ X-Ref-Date: Sat, 23 Jan 2021 13:25:32 GMT
 ## Getting cache
 
 ```
-▶ http GET http://localhost:8080/v2/sdk/cache/content/test x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test"
+▶ http GET http://localhost:8080/v2/sdk/cache/content/u09t x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}"
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 896
@@ -239,7 +226,7 @@ X-Powered-By: Express
 ## Pushing LOG
 
 ```
-▶ http POST http://localhost:8080/stat/queue x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth test" < log_context.json
+▶ http POST http://localhost:8080/stat/queue x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}" < log_context.json
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 0
