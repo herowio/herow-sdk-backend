@@ -1,8 +1,8 @@
 # Herow SDK Backend
 
-[HSB is the SDK backside](https://github.com/herowio/herow-sdk-backend) helping us to save the world.
+[HSB is the SDK backside API](https://github.com/herowio/herow-sdk-backend) helping us to save the world.
 
-It includes several api to interact with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
+It includes several api nteracting with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
 
 ![let's go save the world](https://media.giphy.com/media/26BRxBeok96wnAwpy/source.gif)
 
@@ -96,7 +96,7 @@ When cache seems oudated, we can use the key `last-modified-cache:<client>` to o
 
 ![you're my god damn hero](https://media.giphy.com/media/Sv0uzXvg8svM4/source.gif)
 
-## Retrieving an access_token
+## Retrieving an accessToken
 
 ```
 ▶ http POST http://localhost:8080/auth/authorize/token clientId=test clientSecret=test grantType=password username=test password=test x-version:7.0 x-sdk:test
@@ -115,7 +115,7 @@ X-Powered-By: Express
 }
 ```
 
-`export ACCESS_TOKEN=15RUVomOGl`
+`export ACCESS_TOKEN=$(http POST http://localhost:8080/auth/authorize/token clientId=test clientSecret=test grantType=password username=test password=test x-version:7.0 x-sdk:test | jq -r .accessToken)`
 
 ## Sending user informations
 
