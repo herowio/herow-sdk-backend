@@ -8,7 +8,7 @@ const fastify = require('./app')
 
 fastify
     .register(require('fastify-redis'), { host: process.env.REDIS_URL || DEFAULT_HOST, closeClient: true })
-    .decorateRequest('kafka', {}).addHook('onReady', async () => {
+    .decorateRequest('kafka', null).addHook('onReady', async () => {
         const { Kafka } = require('kafkajs')
         const producer = new Kafka({ clientId: 'herow-sdk-backend', brokers: (process.env.KAFKA_URL || DEFAULT_HOST + ':9092').split(',') }).producer()
         await producer.connect()
