@@ -347,3 +347,13 @@ test('should retrieve populated cache content', async t => {
         pois: [{id:'1'}]
     }, 'with a correct content')
 })
+
+test('should just return OK', async t => {
+    const response = await app.inject({
+        method: 'GET',
+        url: '/healthz'
+    })
+    
+    t.equal(response.statusCode, 200, 'with a status code 200')
+    t.same(response.payload, "OK", 'with a correct content')
+})

@@ -32,6 +32,7 @@ function build(opts={}) {
         .register(require('./routes/information'), { prefix: '/v2/sdk' })
         .register(require('./routes/cache'), { prefix: '/v2/sdk' })
         .register(require('./routes/logs'), { prefix: '/stat' })
+        .register(require('./routes/healthz'))
 }
 
 module.exports = build
