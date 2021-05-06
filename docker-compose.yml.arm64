@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+    sdk:
+        profiles:
+            - testing
+        build: .
+        ports:
+            - 8080:8080
+        depends_on:
+            - redis
+            - kafka
+        environment: 
+            - TOKEN_SALT=secret
+            - REDIS_URL=redis
+            - KAFKA_URL=kafka:9092
+    redis:
+        image: redis
+        hostname: redis
+        container_name: redis
+        ports:
+            - 6379:6379
+    redis-bootstrap:
+        build: data
+        depends_on:
+            - redis
+        environment:
+            - REDIS_URL=redis
+    kafka:
+        image: sylvek/kafka-arm64
+        container_name: kafka
+        ports:
+            - 9092:9092
+        environment:
+            ADVERTISED_HOST: 192.168.0.229
+            ADVERTISED_PORT: 9092

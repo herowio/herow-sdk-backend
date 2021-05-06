@@ -25,10 +25,11 @@ $> npm test
 
 `docker-compose` sets up Redis and Kafka.
 
-Under macOs, please update `KAFKA_ADVERTISED_HOST_NAME` with your local IP. _(localhost should work under Linux)_
+Under macOS, please update `KAFKA_ADVERTISED_HOST_NAME` with your local IP. _(localhost should work under Linux)_
 
 ```
 $> docker-compose up
+$> docker-compose -f docker-compose.yml.arm64 up # for Apple M1
 ```
 
 and…
