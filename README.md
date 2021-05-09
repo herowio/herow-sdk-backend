@@ -2,7 +2,7 @@
 
 [HSB is the SDK backside API](https://github.com/herowio/herow-sdk-backend) helping us to save the world.
 
-It includes several api nteracting with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
+It includes several api interacting with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
 
 ![let's go save the world](https://media.giphy.com/media/26BRxBeok96wnAwpy/source.gif)
 
@@ -21,11 +21,11 @@ $> npm install
 $> npm test
 ```
 
-## How to dev it?
+## How to contribute?
 
-`docker-compose` sets up Redis and Kafka.
+`docker-compose` sets up a Redis and a Kafka instances.
 
-Under macOS, please update `KAFKA_ADVERTISED_HOST_NAME` with your local IP. _(localhost should work under Linux)_
+Under macOS, edit `docker-compose.yml` and update `KAFKA_ADVERTISED_HOST_NAME` by setting your local IP. _(localhost should work under Linux)_
 
 ```
 $> docker-compose up
@@ -40,12 +40,11 @@ $> npm start
 
 # Redis interactions
 
-We massively use Redis as database.
-It contains dedicated keys as you can see above.
+We massively use Redis as database. You have to set a `REDIS_URL` env var to interact with. _(the default value is: redis://127.0.0.1)_
 
 ## identity key
 
-This key allows to match an SDK instance to a `client`. You can create any client as needed, a dedicated key for SDK Android and SDK iOS, etc.
+This key allows to match an SDK instance to a `client`. You can create any client as needed. **You should create a dedicated key for SDK Android and SDK iOS by client and by version**. By this way, you could "stop" easily a specific sdk for a given client.
 
 This part ensure that an untrusted SDK can not interact with your backend.
 
@@ -60,19 +59,31 @@ We need 4+1 informations :
 
 The 5th element is a salt used to hash those informations:
 
-`sha256(SALT, client_id@client_secret@username@password)`
+`sha256(TOKEN_SALT, client_id@client_secret@username@password)`
 
-`TOKEN_SALT` envars is used to override salt key.
+`TOKEN_SALT` env var is used to override salt key _(default is set to secret)_.
 
-The generated key is stored on redis and value is an arbitrary client's name.
+The generated key is stored on redis and value is an arbitrary client's identifier.
+
+To generate a new one :
+
+```
+▶ node
+Welcome to Node.js v16.0.0.
+Type ".help" for more information.
+> const crypto = require('crypto')
+undefined
+> crypto.createHmac("sha256", "secret").update("test@test@test@test").digest("hex")
+'d52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df'
+```
 
 ## token key
 
-Every time an SDK generates a token, it is stored with key `token:<token>` and associated with `client`'s name (see above)
+Every time an SDK generates a token, it is stored with key `token:<token>` and associated with `client`'s identifier (see above). This key is storing during `TOKEN_EXPIRATION` env var _(default is set to 10800 seconds -> 3 hours)_.
 
 ## device key
 
-The SDK configuration _(IDFA, customId, optin)_ is stored on key `device:<deviceId>` during `USER_INFO_EXPIRATION` or 30 days.
+The SDK configuration _(IDFA, customId, optin)_ is stored on key `device:<deviceId>` during `USER_INFO_EXPIRATION` env var _(default is set to 2592000 seconds -> 30 days)_.
 
 ## last-modified-cache key
 
@@ -92,6 +103,12 @@ When cache seems oudated, we can use the key `last-modified-cache:<client>` to o
 ## pois key
 
 `pois:<geohash>` contains a array of "pois" for a given area. Content is shared with every client.
+
+# Kafka interaction
+
+We use Kafka to collect and dispatch LOG from SDKs. You can set `KAFKA_URL` to interact with _(default is set to 127.0.0.1:9092)_. For now, `KAFKA_URL` is a string list of host:port separated by a comma. _(host1:9092,host2:9092,host3:9092)_. *TLS keys and certificates or SASL and are not supported.*
+
+LOG are published on `KAFKA_TOPIC` env var topic _(default is set to stat-logs)_. We use `deviceId` as key and the content of LOG as message.
 
 # API details
 
