@@ -4,7 +4,7 @@ const DEFAULT_HOST = '127.0.0.1'
 const DEFAULT_PORT = 8080
 
 const fastify = require('./app')
-    ({ logger: true, level: 'info', prettyPrint: true })
+    ({ logger: {level: 'warn' } })
 
 fastify
     .register(require('fastify-redis'), { url: process.env.REDIS_URL })
