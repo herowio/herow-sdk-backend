@@ -1,48 +1,59 @@
 # Herow SDK Backend
 
-[HSB is the SDK backside API](https://github.com/herowio/herow-sdk-backend) helping us to save the world.
+## Table of contents
 
-It includes several api interacting with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
 
-![let's go save the world](https://media.giphy.com/media/26BRxBeok96wnAwpy/source.gif)
+## General info
 
-## How to test it?
+[This project is the HEROW's SDK backside API](https://github.com/herowio/herow-sdk-backend).
 
-`node` is also needed, we use `v15.14.0` but should work with lower version.
+It includes API needed to interact with [SDK iOS](https://github.com/herowio/herow-sdk-ios) and [SDK Android](https://github.com/herowio/herow-sdk-android).
+
+You can deploy it on AppEngine, Heroku, Kubernetes or on premise.
+
+## Technologies
+
+Project is created with:
+
+- Node _(v15.14.0 - but should work with lower version)_
+- Redis 1+
+- Kafka 0.10+
+
+## Setup
 
 ```
 $> brew install node
 ```
 
-After that, install dependencies and run tests
+Clone the project
+
+```
+$> git clone git@github.com:herowio/herow-sdk-backend.git
+$> cd herow-sdk-backend
+```
+
+Deploy Redis and Kafka via docker
+
+```
+$> docker-compose up # for x86
+$> docker-compose -f docker-compose.yml.arm64 up # for M1
+```
+
+After that, install dependencies and run it 
 
 ```
 $> npm install
-$> npm test
-```
-
-## How to contribute?
-
-`docker-compose` sets up a Redis and a Kafka instances.
-
-Under macOS, edit `docker-compose.yml` and update `KAFKA_ADVERTISED_HOST_NAME` by setting your local IP. _(localhost should work under Linux)_
-
-```
-$> docker-compose up
-$> docker-compose -f docker-compose.yml.arm64 up # for Apple M1
-```
-
-and…
-
-```
 $> npm start
 ```
 
-# Redis interactions
+### Redis interactions
 
-We massively use Redis as database. You have to set a `REDIS_URL` env var to interact with. _(the default value is: redis://127.0.0.1)_
+We massively use Redis as database. You have to set a `REDIS_URL` env var to interact with. _(default value: redis://127.0.0.1)_
 
-## identity key
+#### Identity key
 
 This key allows to match an SDK instance to a `client`. You can create any client as needed. **You should create a dedicated key for SDK Android and SDK iOS by client and by version**. By this way, you could "stop" easily a specific sdk for a given client.
 
@@ -57,7 +68,10 @@ We need 4+1 informations :
 | username | a dedicated account allowing to use the app | appdemo |
 | password | a dedicated password | rtFGHG6$ |
 
+
 The 5th element is a salt used to hash those informations:
+
+![](https://media.giphy.com/media/l0EoBVexxvaP88SSQ/giphy.gif)
 
 `sha256(TOKEN_SALT, client_id@client_secret@username@password)`
 
@@ -77,44 +91,46 @@ undefined
 'd52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df'
 ```
 
-## token key
+#### Token key
 
-Every time an SDK generates a token, it is stored with key `token:<token>` and associated with `client`'s identifier (see above). This key is storing during `TOKEN_EXPIRATION` env var _(default is set to 10800 seconds -> 3 hours)_.
+After successful authentification, `token` is stored by using key `token:<token>` and associated with the `client`'s identifier _(see above)_. This key is storing during `TOKEN_EXPIRATION` env var _(default is set to 10800 seconds -> 3 hours)_.
 
-## device key
+#### Device key
 
 The SDK configuration _(IDFA, customId, optin)_ is stored on key `device:<deviceId>` during `USER_INFO_EXPIRATION` env var _(default is set to 2592000 seconds -> 30 days)_.
 
-## last-modified-cache key
+SDK updates those information every day. Meaning that a quiet user is forgotten after 30 days, to prevent privacy.
+
+#### last-modified-cache key
 
 The SDK regularly pulls its configuration.
-When cache seems oudated, we can use the key `last-modified-cache:<client>` to order a cache refresh.
+When cache seems outdated, we use the key `last-modified-cache:<client>` to order a cache refresh.
 
 `last-modified-cache:<client>` contains timestamp in milliseconds of the last cache update. SDK will decide if it have to refresh it.
 
-## campaigns key
+#### Campaigns key
 
 `campaigns:<client>` contains an array of campaigns associated to a given client. If this key is modified, we also should upgrade `last-modified-cache:<client>`.
 
-## zones key
+#### Zones key
 
-`zones:<client>:<geohash>` contains an array of "zones" dedicated to a client and to a specific area. [Geohash](https://fr.wikipedia.org/wiki/Geohash) is a 4 digits geocoding code used to parcel the world on 20kmx20km squares. If this key is modified, we also should upgrade `last-modified-cache:<client>`.
+`zones:<client>:<geohash>` contains an array of "zones" dedicated to a client and to a specific area. [Geohash](https://fr.wikipedia.org/wiki/Geohash) is a 4 digits geocoding code used to parcel the world on 20x20 km squares. If this key is modified, we also should upgrade `last-modified-cache:<client>`.
 
-## pois key
+#### Pois key
 
 `pois:<geohash>` contains a array of "pois" for a given area. Content is shared with every client.
 
-# Kafka interaction
+### Kafka interaction
 
 We use Kafka to collect and dispatch LOG from SDKs. You can set `KAFKA_URL` to interact with _(default is set to 127.0.0.1:9092)_. For now, `KAFKA_URL` is a string list of host:port separated by a comma. _(host1:9092,host2:9092,host3:9092)_. *TLS keys and certificates or SASL and are not supported.*
 
 LOG are published on `KAFKA_TOPIC` env var topic _(default is set to stat-logs)_. We use `deviceId` as key and the content of LOG as message.
 
-# API details
+### API interaction
 
 ![you're my god damn hero](https://media.giphy.com/media/Sv0uzXvg8svM4/source.gif)
 
-## Retrieving an accessToken
+#### Retrieving an accessToken
 
 ```
 ▶ http POST http://localhost:8080/auth/authorize/token clientId=test clientSecret=test grantType=password username=test password=test x-version:7.0 x-sdk:test
@@ -135,7 +151,7 @@ X-Powered-By: Express
 
 `export ACCESS_TOKEN=$(http POST http://localhost:8080/auth/authorize/token clientId=test clientSecret=test grantType=password username=test password=test x-version:7.0 x-sdk:test | jq -r .accessToken)`
 
-## Sending user informations
+#### Sending user informations
 
 ```
 ▶ http PUT http://localhost:8080/v2/sdk/userinfo x-device-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}" < userinfo.json
@@ -153,7 +169,7 @@ X-Powered-By: Express
 }
 ```
 
-## Getting configuration
+#### Getting configuration
 
 ```
 ▶ http GET http://localhost:8080/v2/sdk/config x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}"
@@ -176,7 +192,7 @@ X-Ref-Date: Sat, 23 Jan 2021 13:25:32 GMT
 }
 ```
 
-## Getting cache
+#### Getting cache
 
 ```
 ▶ http GET http://localhost:8080/v2/sdk/cache/content/u09t x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}"
@@ -241,7 +257,7 @@ X-Powered-By: Express
 }
 ```
 
-## Pushing LOG
+#### Pushing LOG
 
 ```
 ▶ http POST http://localhost:8080/stat/queue x-device-id:test x-herow-id:test x-sdk:test x-version:7.0 "Authorization: OAuth ${ACCESS_TOKEN}" < log_context.json
@@ -254,9 +270,9 @@ X-Powered-By: Express
 X-Ref-Date: Sat, 23 Jan 2021 13:26:41 GMT
 ```
 
-## LOG format
+### LOG format
 
-### CONTEXT
+#### CONTEXT
 
 Generated every time a new location is detected
 
@@ -301,7 +317,7 @@ Generated every time a new location is detected
 }
 ```
 
-### CONTEXT_REALTIME
+#### CONTEXT_REALTIME
 
 Generated when "tracking mode" is enabled
 
@@ -346,7 +362,7 @@ Generated when "tracking mode" is enabled
 }
 ```
 
-### GEOFENCE_ENTER
+#### GEOFENCE_ENTER
 
 Sent when a entering zone is detected.
 
@@ -381,7 +397,7 @@ Sent when a entering zone is detected.
 }
 ```
 
-### GEOFENCE_EXIT
+#### GEOFENCE_EXIT
 
 Sent when a exiting zone is detected.
 
@@ -416,7 +432,7 @@ Sent when a exiting zone is detected.
 }
 ```
 
-### GEOFENCE_VISIT
+#### GEOFENCE_VISIT
 
 Sent when a exiting zone is detected.
 
@@ -448,7 +464,7 @@ This duration is a calculated time between the GEOFENCE_ENTER and GEOFENCE_EXIT 
 }
 ```
 
-### GEOFENCE_ZONE_NOTIFICATION
+#### GEOFENCE_ZONE_NOTIFICATION
 
 Sent when a notification is displayed.
 
@@ -485,7 +501,7 @@ Sent when a notification is displayed.
 }
 ```
 
-### REDIRECT
+#### REDIRECT
 
 Sent when a notification is opened _(click on it)_.
 
