@@ -312,7 +312,13 @@ Generated every time a new location is detected
         "application_name":"herow",
         "application_version":"3.3.0",
         "subtype":"CONTEXT",
-        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518"
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
+        "moments": {
+            "home": 0.56,
+            "office": 0.03,
+            "shopping": 0.02,
+            "other": 0.23
+        }
     }
 }
 ```
@@ -357,7 +363,13 @@ Generated when "tracking mode" is enabled
         "application_name":"herow",
         "application_version":"3.3.0",
         "subtype":"CONTEXT_REALTIME",
-        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518"
+        "ua":"Mozilla/5.0 (iPhone12,1; CPU iPhone OS 14_3 like Mac OS X) FxiOS/3.3.0b518",
+        "moments": {
+            "home": 0.56,
+            "office": 0.03,
+            "shopping": 0.02,
+            "other": 0.23
+        }
     }
 }
 ```
@@ -392,6 +404,12 @@ Sent when a entering zone is detected.
                 "distance":34.90530795095254,
                 "radius":300.0,
                 "confidence":0.456
+        },
+        "moments": {
+            "home": 0.56,
+            "office": 0.03,
+            "shopping": 0.02,
+            "other": 0.23
         }
     }
 }
@@ -427,6 +445,12 @@ Sent when a exiting zone is detected.
                 "distance":34.90530795095254,
                 "radius":300.0,
                 "confidence":0.456
+        },
+        "moments": {
+            "home": 0.56,
+            "office": 0.03,
+            "shopping": 0.02,
+            "other": 0.23
         }
     }
 }
@@ -496,7 +520,13 @@ Sent when a notification is displayed.
                 "confidence":0.456
         },
         "campaign_id": "6009ff7c89bfa239ecce712e",
-        "techno_hash": "1qnn4irqfmghs"
+        "techno_hash": "1qnn4irqfmghs",
+        "moments": {
+            "home": 0.56,
+            "office": 0.03,
+            "shopping": 0.02,
+            "other": 0.23
+        }
     }
 }
 ```
