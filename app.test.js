@@ -245,7 +245,8 @@ test('should send informations when adId is more than 10 characters and optins c
 
     t.equal(response.statusCode, 200, 'with a status code 200')
     t.same(response.json(), {
-        herowId: 'test'
+        herowId: 'test',
+        modifiedDate: 0
     }, 'with test as herowId')
 })
 

@@ -165,7 +165,8 @@ Keep-Alive: timeout=5
 X-Powered-By: Express
 
 {
-    "herowId": "rtegflkgt"
+    "herowId": "rtegflkgt",
+    "modifiedDate": 0
 }
 ```
 
@@ -244,6 +245,7 @@ X-Powered-By: Express
     "zones": [
         {
             "access": {
+                "id": "fdrlerAdfv",
                 "address": "54 Rue de Paradis, 75010 Paris, France",
                 "name": "HEROW"
             },

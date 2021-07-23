@@ -1,5 +1,7 @@
 'use strict'
 
+const crypto = require('crypto')
+
 module.exports = async function (fastify, options) {
 
   fastify.post('/queue', {
@@ -25,9 +27,10 @@ module.exports = async function (fastify, options) {
       }
     }
   }, async (req, res) => {
+    req.body.id             = await crypto.randomBytes(10).toString('hex')
     req.body.type           = "app_mobile"
     req.body.date           = Date.now()
-    req.body.herow_id       = req.herowId
+    req.body.data.herow_id  = req.herowId
     req.body.data.sdk       = req.client
     req.body.data.company   = req.client
     req.body.data.db        = req.client

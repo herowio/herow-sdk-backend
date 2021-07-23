@@ -39,7 +39,8 @@ module.exports = async function (fastify, options) {
         200: {
           type: 'object',
           properties: {
-              herowId: { type: 'string' }
+              herowId: { type: 'string' },
+              modifiedDate: { type: 'number' }
           }
         }
       }
@@ -50,7 +51,8 @@ module.exports = async function (fastify, options) {
     await fastify.redis.set('device:' + req.deviceId, JSON.stringify(req.body))
     await fastify.redis.expire('device:' + req.deviceId, expiration)
     res.send({
-      herowId: herowId
+      herowId: herowId,
+      modifiedDate: 0
     })
   })
 }
