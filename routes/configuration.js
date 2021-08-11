@@ -30,7 +30,7 @@ module.exports = async function (fastify, options) {
       const lastCacheModified = await fastify.redis.get('last-modified-cache:' + req.client)
       res.status(200).headers({
         'x-ref-date': new Date().toUTCString(),
-        'x-cache-last-modified': new Date(+lastCacheModified||0).toUTCString(),
+        'X-Cache-Last-Modified': new Date(+lastCacheModified||0).toUTCString(),
         'last-modified': new Date(0).toUTCString(),
       }).send({
           cacheInterval: 10800 * 1000,
