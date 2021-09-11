@@ -59,7 +59,7 @@ module.exports = async function (fastify, options) {
         "expiresIn": expiration
       })
     } else {
-      res.status(400).send("credentials are wrong");
+      res.status(401).send("credentials are wrong");
     }
   })
 }

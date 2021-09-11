@@ -39,7 +39,7 @@ test('should refuse authentication when clientSecret is test2', async t => {
         headers: {'x-version': '7.0.0', 'x-sdk': 'test'}
     })
 
-    t.equal(response.statusCode, 400, 'with a status code 400')
+    t.equal(response.statusCode, 401, 'with a status code 401')
 })
 
 test('should refuse authentication when grantType is missing', async t => {
