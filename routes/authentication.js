@@ -48,7 +48,7 @@ module.exports = async function (fastify, options) {
     // client-name should be used later as key to retrieve the user configuration
     const key_proposal = client_id + "@" + client_secret + "@" + username + "@" + password
     const client_key = crypto.createHmac("sha256", secret).update(key_proposal).digest("hex")
-    const client_name = await fastify.redis.get(client_key)
+    const client_name = await fastify.redis.get("sdk:" + client_key)
 
     if (client_name) {
       const token = await crypto.randomBytes(5).toString('hex')
