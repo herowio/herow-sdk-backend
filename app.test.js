@@ -7,7 +7,7 @@ const app = build()
 const RedisMock = require('ioredis-mock');
 app.decorate('redis', new RedisMock({
     data: {
-        d52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df: 'client', // sha256(keys) - client
+        'sdk:d52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df': 'client', // sha256(keys) - client
         'token:test': 'client',
         'token:default': 'unset',
         'last-modified-cache:client': 1000, // timestamp in milliseconds

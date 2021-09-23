@@ -55,7 +55,7 @@ We massively use Redis as database. You have to set a `REDIS_URL` env var to int
 
 #### Identity key
 
-This key allows to match an SDK instance to a `client`. You can create any client as needed. **You should create a dedicated key for SDK Android and SDK iOS by client and by version**. By this way, you could "stop" easily a specific sdk for a given client.
+The sdk:<key> allows to match an SDK instance to a `client`. You can create any client as needed. **You should create a dedicated key for SDK Android and SDK iOS by client and by version**. By this way, you could "stop" easily a specific sdk for a given client.
 
 This part ensure that an untrusted SDK can not interact with your backend.
 
@@ -77,7 +77,7 @@ The 5th element is a salt used to hash those informations:
 
 `TOKEN_SALT` env var is used to override salt key _(default is set to secret)_.
 
-The generated key is stored on redis and value is an arbitrary client's identifier.
+The generated key is stored on redis prefixed by `sdk:` and value is an arbitrary client's identifier.
 
 To generate a new one :
 
@@ -89,6 +89,12 @@ Type ".help" for more information.
 undefined
 > crypto.createHmac("sha256", "secret").update("test@test@test@test").digest("hex")
 'd52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df'
+```
+
+And you should set it on Redis like that: 
+
+```
+SET sdk:d52066c26e3803659e5d1a4b75cdbaab2b26474f371eb17c7e582be67fdca0df my_client_name
 ```
 
 #### Token key
