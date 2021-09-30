@@ -55,7 +55,7 @@ We massively use Redis as database. You have to set a `REDIS_URL` env var to int
 
 #### Identity key
 
-The sdk:<key> allows to match an SDK instance to a `client`. You can create any client as needed. **You should create a dedicated key for SDK Android and SDK iOS by client and by version**. By this way, you could "stop" easily a specific sdk for a given client.
+The `sdk:<key>` allows to match an SDK instance to a `client`. You can create any client as needed. **You should create a dedicated key for SDK Android and SDK iOS by client and by version**. By this way, you could "stop" easily a specific sdk for a given client.
 
 This part ensure that an untrusted SDK can not interact with your backend.
 
