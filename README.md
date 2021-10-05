@@ -128,7 +128,9 @@ When cache seems outdated, we use the key `last-modified-cache:<client>` to orde
 
 ### Kafka interaction
 
-We use Kafka to collect and dispatch LOG from SDKs. You can set `KAFKA_URL` to interact with _(default is set to 127.0.0.1:9092)_. For now, `KAFKA_URL` is a string list of host:port separated by a comma. _(host1:9092,host2:9092,host3:9092)_. *TLS keys and certificates or SASL and are not supported.*
+We use Kafka to collect and dispatch LOG from SDKs. You can set `KAFKA_URL` to interact with _(default is set to kafka://127.0.0.1:9092)_. For now, `KAFKA_URL` is a string list of host:port separated by a comma. _(kafka://host1:9092,kafka://host2:9092,kafka://host3:9092)_.
+
+For SSL support, use **kafka+ssl://** and set `KAFKA_TRUSTED_CERT` _(default is /secrets/ca.crt)_, `KAFKA_CLIENT_CERT` _(default is /secrets/client-cert.pem)_ and `KAFKA_CLIENT_CERT_KEY` _(default is /secrets/client-key.pem)_ keys.
 
 LOG are published on `KAFKA_TOPIC` env var topic _(default is set to stat-logs)_. We use `deviceId` as key and the content of LOG as message.
 
