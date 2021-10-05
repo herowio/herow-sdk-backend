@@ -1,16 +1,35 @@
 'use strict'
 
-const DEFAULT_HOST = '127.0.0.1'
+const DEFAULT_URL = 'kafka://127.0.0.1:9092'
 const DEFAULT_PORT = 8080
+
+const fs = require('fs')
 
 const fastify = require('./app')
     ({ logger: {level: 'warn' } })
 
+const { Kafka } = require('kafkajs')
+const kafkaProducer = () => {
+    const uri = (process.env.KAFKA_URL || DEFAULT_URL).split(',')
+    const withSsl = new URL(uri[0]).protocol === 'kafka+ssl:'
+    const brokers = uri.map(url => new URL(url).host)
+
+    return new Kafka({
+        clientId: 'herow-sdk-backend',
+        brokers: brokers,
+        ssl: withSsl && {
+            rejectUnauthorized: false,
+            ca: [fs.readFileSync(process.env.KAFKA_TRUSTED_CERT || '/secrets/ca.crt', 'utf-8')],
+            key: fs.readFileSync(process.env.KAFKA_CLIENT_CERT_KEY || '/secrets/client-key.pem', 'utf-8'),
+            cert: fs.readFileSync(process.env.KAFKA_CLIENT_CERT || '/secrets/client-cert.pem', 'utf-8')
+        }
+    }).producer()
+}
+
 fastify
     .register(require('fastify-redis'), { url: process.env.REDIS_URL })
     .decorateRequest('kafka', null).addHook('onReady', async () => {
-        const { Kafka } = require('kafkajs')
-        const producer = new Kafka({ clientId: 'herow-sdk-backend', brokers: (process.env.KAFKA_URL || DEFAULT_HOST + ':9092').split(',') }).producer()
+        const producer = kafkaProducer()
         await producer.connect()
         fastify.kafka = producer
     })
