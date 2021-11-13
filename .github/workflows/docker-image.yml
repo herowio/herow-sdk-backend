@@ -7,7 +7,20 @@ on:
     branches: [ main ]
 
 jobs:
-  setup:
+
+  set-up-google-secret:
+    runs-on: ubuntu-latest
+    outputs:
+      isGrcSAKey: ${{ steps.set-up-google-secret.outputs.isGrcSAKey }}
+    steps:
+    - name: check for secrets needed to run demo
+      id: check-secrets
+      run: |
+        if [ ! -z "${{ secrets.GCR_SA_KEY }}" ]; then
+          echo "::set-output name=isGrcSAKey::true"
+        fi
+
+  setup-docker-cache:
     env:
       GITHUB_SHA: ${{ github.sha }}
       GITHUB_REF: ${{ github.ref }}
@@ -52,11 +65,13 @@ jobs:
           push: true
           platforms: ${{ env.PLATFORMS }}
           tags: ghcr.io/herowio/herow-sdk-backend:latest
-
+  
   build-google-registry: 
+    needs:  
+      - set-up-google-secret
+    if: ${{ needs.set-up-google-secret.outputs.isGrcSAKey == 'true' }}
     env:
-      PLATFORMS: "linux/amd64" 
-    
+      PLATFORMS: "linux/amd64"  
     runs-on: ubuntu-latest
     steps:
     - name: "Setup gcloud CLI"
@@ -73,8 +88,6 @@ jobs:
   
     - uses: docker/build-push-action@v2
       with:
-        context: .
-        file: ./deploy/Dockerfile_slim
         platforms: ${{ env.PLATFORMS }}
         push: true
         tags: |
