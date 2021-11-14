@@ -18,9 +18,8 @@ jobs:
     - name: check for secrets needed to push on gcr
       id: check-secrets
       run: |
-        if [ ! -z "${{ env.GCR_SA_KEY }}" ]; then
-          echo "::set-output name=isGrcSAKey::true"
-        fi
+        echo "isGrcSAKey: ${{ env.GCR_SA_KEY != '' }}"
+        echo "::set-output name=isGrcSAKey::${{ env.GCR_SA_KEY != '' }}"
 
   setup-docker-cache:
     env:
@@ -71,7 +70,7 @@ jobs:
   build-google-registry: 
     needs:  
       - set-up-google-secret
-    if: ${{ needs.set-up-google-secret.outputs.isGrcSAKey == 'true' }}
+    if: needs.set-up-google-secret.outputs.isGrcSAKey == 'true'
     env:
       PLATFORMS: "linux/amd64"  
     runs-on: ubuntu-latest
