@@ -10,13 +10,15 @@ jobs:
 
   set-up-google-secret:
     runs-on: ubuntu-latest
+    env:
+        GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
     outputs:
       isGrcSAKey: ${{ steps.check-secrets.outputs.isGrcSAKey }}
     steps:
-    - name: check for secrets needed to run demo
+    - name: check for secrets needed to push on gcr
       id: check-secrets
       run: |
-        if [ ! -z "${{ secrets.GCR_SA_KEY }}" ]; then
+        if [ ! -z "${{ env.GCR_SA_KEY }}" ]; then
           echo "::set-output name=isGrcSAKey::true"
         fi
 
