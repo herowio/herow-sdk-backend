@@ -8,20 +8,6 @@ on:
 
 jobs:
 
-  set-up-google-secret:
-    runs-on: ubuntu-latest
-    env:
-        GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
-    outputs:
-      isGrcSAKey: ${{ steps.check-secrets.outputs.isGrcSAKey }}
-    steps:
-    - name: check for secrets needed to push on gcr
-      id: check-secrets
-      run: |
-        if [ ! -z "${{ env.GCR_SA_KEY }}" ]; then
-          echo "::set-output name=isGrcSAKey::true"
-        fi
-
   setup-docker-cache:
     env:
       GITHUB_SHA: ${{ github.sha }}
@@ -69,11 +55,10 @@ jobs:
           tags: ghcr.io/herowio/herow-sdk-backend:latest
   
   build-google-registry: 
-    needs:  
-      - set-up-google-secret
-    if: ${{ needs.set-up-google-secret.outputs.isGrcSAKey == 'true' }}
     env:
-      PLATFORMS: "linux/amd64"  
+        GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
+        PLATFORMS: "linux/amd64"  
+    if: "${{ env.GCR_SA_KEY != ''}}"
     runs-on: ubuntu-latest
     steps:
     - name: "Setup gcloud CLI"
