@@ -46,6 +46,8 @@ jobs:
           ${{ runner.os }}-buildx-
 
   build-github-registry:
+    needs:
+      - setup-docker-cache
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -70,6 +72,7 @@ jobs:
   build-google-registry: 
     needs:  
       - set-up-google-secret
+      - setup-docker-cache
     if: needs.set-up-google-secret.outputs.isGrcSAKey == 'true'
     env:
       PLATFORMS: "linux/amd64"  
