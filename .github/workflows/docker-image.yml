@@ -56,9 +56,9 @@ jobs:
   
   build-google-registry: 
     env:
-        GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
+        ENV_GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
         PLATFORMS: "linux/amd64"  
-    if: ${{ env.GCR_SA_KEY != ''}}
+    if: ${{ env.ENV_GCR_SA_KEY != ''}}
     runs-on: ubuntu-latest
     steps:
     - name: "Setup gcloud CLI"
