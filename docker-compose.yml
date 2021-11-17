@@ -11,8 +11,8 @@ services:
             - kafka
         environment: 
             - TOKEN_SALT=secret
-            - REDIS_URL=redis
-            - KAFKA_URL=kafka:9092
+            - REDIS_URL=redis://redis:6379/0
+            - KAFKA_URL=kafka://kafka:9092
     redis:
         image: redis
         hostname: redis

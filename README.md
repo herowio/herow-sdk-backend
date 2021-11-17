@@ -49,6 +49,12 @@ $> npm install
 $> npm start
 ```
 
+Also, you can pull image from Github
+
+```
+$> docker pull ghcr.io/herowio/herow-sdk-backend
+```
+
 ### Redis interactions
 
 We massively use Redis as database. You have to set a `REDIS_URL` env var to interact with. _(default value: redis://127.0.0.1)_
