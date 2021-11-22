@@ -27,7 +27,7 @@ module.exports = async function (fastify, options) {
       }
     }
   }, async (req, res) => {
-    req.body.id             = await crypto.randomBytes(10).toString('hex')
+    req.body.id             = crypto.randomBytes(10).toString('hex')
     req.body.type           = "app_mobile"
     req.body.date           = Date.now()
     req.body.data.herow_id  = req.herowId
