@@ -7,7 +7,47 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+
+  set-up-google-secret:
+    runs-on: ubuntu-latest
+    env:
+        GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
+    outputs:
+      isGrcSAKey: ${{ steps.check-secrets.outputs.isGrcSAKey }}
+    steps:
+    - name: check for secrets needed to push on gcr
+      id: check-secrets
+      run: |
+        echo "isGrcSAKey: ${{ env.GCR_SA_KEY != '' }}"
+        echo "::set-output name=isGrcSAKey::${{ env.GCR_SA_KEY != '' }}"
+
+  setup-docker-cache:
+    env:
+      GITHUB_SHA: ${{ github.sha }}
+      GITHUB_REF: ${{ github.ref }}
+      PLATFORMS: "linux/amd64"
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone source code
+      uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+      with:
+        platforms: ${{ env.PLATFORMS }}
+
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+  build-github-registry:
+    needs:
+      - setup-docker-cache
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -26,5 +66,33 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          platforms: linux/amd64
+          platforms: ${{ env.PLATFORMS }}
           tags: ghcr.io/herowio/herow-sdk-backend:latest
+  
+  build-google-registry: 
+    needs:  
+      - set-up-google-secret
+      - setup-docker-cache
+    if: needs.set-up-google-secret.outputs.isGrcSAKey == 'true'
+    env:
+      PLATFORMS: "linux/amd64"  
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Setup gcloud CLI"
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GCR_SA_KEY }}
+        project_id: ${{ secrets.GCR_PROJECT_ID }}
+        export_default_credentials: true
+
+    #Configure Docker to use the gcloud command-line tool as a credential
+    # helper for authentication
+    - run: |-
+        gcloud --quiet auth configure-docker
+  
+    - uses: docker/build-push-action@v2
+      with:
+        platforms: ${{ env.PLATFORMS }}
+        push: true
+        tags: |
+          ${{secrets.IMAGE_REGISTRY}}/${{ secrets.GCR_PROJECT_ID }}/apps/herow-sdk-backend:latest
