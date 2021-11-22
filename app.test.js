@@ -234,13 +234,24 @@ test('should fail to send informations when optins contains more than one elemen
     t.equal(response.statusCode, 400, 'with a status code 400')
 })
 
+test('should fail to send informations when location contains bad keys', async t => {
+    const response = await app.inject({
+        method: 'PUT',
+        url: '/v2/sdk/userinfo',
+        headers: {'authorization': 'OAuth test', 'x-version': '7.0.0', 'x-sdk': 'test', 'x-device-id': 'test', 'x-herow-id': 'test'},
+        payload: { optins: [ { type: 'USER_DATA', value: false } ], location: { status: 'BAD', precision: 'BAD' } }
+    })
+
+    t.equal(response.statusCode, 400, 'with a status code 400')
+})
+
 test('should send informations when adId is more than 10 characters and optins contains USER_DATA', async t => {
 
     const response = await app.inject({
         method: 'PUT',
         url: '/v2/sdk/userinfo',
         headers: {'authorization': 'OAuth test', 'x-version': '7.0.0', 'x-sdk': 'test', 'x-device-id': 'test', 'x-herow-id': 'test'},
-        payload: { adId: 'morethan10characters', optins: [ { type: 'USER_DATA', value: true } ], customId: "test" }
+        payload: { adId: 'morethan10characters', optins: [ { type: 'USER_DATA', value: true } ], customId: "test", location: { status: 'ALWAYS', precision: 'FINE' } }
     })
 
     t.equal(response.statusCode, 200, 'with a status code 200')

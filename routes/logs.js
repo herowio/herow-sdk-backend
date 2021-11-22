@@ -36,7 +36,11 @@ module.exports = async function (fastify, options) {
     req.body.data.db        = req.client
 
     const userinfo = await fastify.redis.get('device:' + req.deviceId)
-    req.body.data.custom_id = JSON.parse(userinfo)?.customId
+    const userinfo_json = JSON.parse(userinfo)
+
+    req.body.data.custom_id = userinfo_json?.customId
+    req.body.data.location_status = userinfo_json?.location?.status
+    req.body.data.location_precision = userinfo_json?.location?.precision
 
     await fastify.kafka.send({
       topic: process.env.KAFKA_TOPIC || 'stat-logs',

@@ -22,6 +22,12 @@ module.exports = async function (fastify, options) {
                 value: { type: 'boolean' } 
               } 
             } 
+          },
+          location: { type: 'object',
+            properties: {
+              status: { type: 'string', enum: [ 'ALWAYS', 'WHILE_IN_USE', 'NOT_DETERMINED', 'DENIED' ] },
+              precision: { type: 'string', enum: [ 'FINE', 'COARSE' ] }
+            }
           }
         }
       },
