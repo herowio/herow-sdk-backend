@@ -5,22 +5,31 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
+  release:
+    types:
+      - published
 jobs:
-
-  set-up-google-secret:
+  set-up:
     runs-on: ubuntu-latest
     env:
-        GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
+      GCR_SA_KEY: ${{ secrets.GCR_SA_KEY }}
     outputs:
       isGrcSAKey: ${{ steps.check-secrets.outputs.isGrcSAKey }}
+      dockerTag: ${{ steps.check-docker.outputs.dockerTag }}
     steps:
     - name: check for secrets needed to push on gcr
       id: check-secrets
       run: |
         echo "isGrcSAKey: ${{ env.GCR_SA_KEY != '' }}"
         echo "::set-output name=isGrcSAKey::${{ env.GCR_SA_KEY != '' }}"
-
+    - name: check for docker tag 
+      id: check-docker
+      run: |
+        if [ $GITHUB_REF_TYPE == "tag" ]; then
+           echo "::set-output name=dockerTag::$GITHUB_REF_NAME"
+        else
+          echo '::set-output name=dockerTag::latest'
+        fi
   setup-docker-cache:
     env:
       GITHUB_SHA: ${{ github.sha }}
@@ -47,6 +56,7 @@ jobs:
 
   build-github-registry:
     needs:
+      - set-up
       - setup-docker-cache
     runs-on: ubuntu-latest
     steps:
@@ -67,13 +77,13 @@ jobs:
         with:
           push: true
           platforms: ${{ env.PLATFORMS }}
-          tags: ghcr.io/herowio/herow-sdk-backend:latest
+          tags: ghcr.io/herowio/herow-sdk-backend:${{ needs.set-up.outputs.dockerTag }}
   
   build-google-registry: 
     needs:  
-      - set-up-google-secret
+      - set-up
       - setup-docker-cache
-    if: needs.set-up-google-secret.outputs.isGrcSAKey == 'true'
+    if: needs.set-up.outputs.isGrcSAKey == 'true'
     env:
       PLATFORMS: "linux/amd64"  
     runs-on: ubuntu-latest
@@ -95,4 +105,4 @@ jobs:
         platforms: ${{ env.PLATFORMS }}
         push: true
         tags: |
-          ${{secrets.IMAGE_REGISTRY}}/${{ secrets.GCR_PROJECT_ID }}/apps/herow-sdk-backend:latest
+          ${{secrets.IMAGE_REGISTRY}}/${{ secrets.GCR_PROJECT_ID }}/apps/herow-sdk-backend:${{ needs.set-up.outputs.dockerTag }}
