@@ -1,6 +1,7 @@
 'use strict'
 
-const DEFAULT_URL = 'kafka://127.0.0.1:9092'
+const DEFAULT_KAFKA_URL = 'kafka://127.0.0.1:9092'
+const DEFAULT_REDIS_URL = 'redis://127.0.0.1:6379'
 const DEFAULT_PORT = 8080
 
 const fs = require('fs')
@@ -10,7 +11,7 @@ const fastify = require('./app')
 
 const { Kafka } = require('kafkajs')
 const kafkaProducer = () => {
-    const uri = (process.env.KAFKA_URL || DEFAULT_URL).split(',')
+    const uri = (process.env.KAFKA_URL || DEFAULT_KAFKA_URL).split(',')
     const withSsl = new URL(uri[0]).protocol === 'kafka+ssl:'
     const brokers = uri.map(url => new URL(url).host)
 
@@ -26,8 +27,24 @@ const kafkaProducer = () => {
     }).producer()
 }
 
+const redisOptions = () => {
+    const uri = new URL(process.env.REDIS_URL || DEFAULT_REDIS_URL)
+    const withSentinel = uri.protocol === 'sentinel:'
+    if (withSentinel) {
+        return {
+            sentinels : [ { host: uri.hostname, port: uri.port } ],
+            name: "redis-cluster-master",
+            username: uri.username,
+            password: uri.password,
+            db: uri.pathname.substr(1),
+        }
+    } else {
+        return { url: uri.href }
+    }
+}
+
 fastify
-    .register(require('fastify-redis'), { url: process.env.REDIS_URL })
+    .register(require('fastify-redis'), redisOptions())
     .decorateRequest('kafka', null).addHook('onReady', async () => {
         const producer = kafkaProducer()
         await producer.connect()
