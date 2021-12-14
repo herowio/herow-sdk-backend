@@ -21,7 +21,7 @@ jobs:
           node-version: '14'
 
       - name: bump package version
-        run: npm version --no-git-tag-version ${{ github.event.inputs.release-version }}
+        run: npm version --allow-same-version --no-git-tag-version ${{ github.event.inputs.release-version }} 
        
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
