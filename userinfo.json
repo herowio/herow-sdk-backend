@@ -1,7 +1,38 @@
 {
-	"customId": "my-custom-id",
-	"adId": "adIdon10charsAndMore",
-	"optins": [
-		{ "type": "USER_DATA", "value": true }
-	]
+	"location": {
+		"status": "WHILE_IN_USE",
+		"precision": "FINE"
+	},
+	"offset": 3600000,
+	"lang": "en",
+	"adId": "28C89993-E2AB-45A4-B097-81BAE7BA7750",
+	"optins": [{
+		"type": "USER_DATA",
+		"value": true
+	}],
+ 	"predictions": {
+		"tags": [{
+			"tag": "Convenience Store",
+			"pattern": {
+				"monday_late_afternoon": 0.13,
+				"tuesday_evening": 0.6
+			}
+		},
+		{
+			"tag": "Intermarche Contact",
+			"pattern": {
+				"monday_morning": 0.85,
+				"friday_evening": 0.12
+			}
+		}],
+		"zones": [{
+			"id": "3f7e5b9dfa6df282b7bffe43557b1bdb",
+			"pattern": {
+				"thursday_early_morning": 0.37,
+				"thursday_late_afternoon": 0.62
+			}
+		}]
+	},
+	"customId": "Damien",
+	"adStatus": true
 }
