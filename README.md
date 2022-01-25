@@ -420,12 +420,6 @@ Sent when a entering zone is detected.
                 "distance":34.90530795095254,
                 "radius":300.0,
                 "confidence":0.456
-        },
-        "moments": {
-            "home": 0.56,
-            "office": 0.03,
-            "shopping": 0.02,
-            "other": 0.23
         }
     }
 }
@@ -461,12 +455,6 @@ Sent when a exiting zone is detected.
                 "distance":34.90530795095254,
                 "radius":300.0,
                 "confidence":0.456
-        },
-        "moments": {
-            "home": 0.56,
-            "office": 0.03,
-            "shopping": 0.02,
-            "other": 0.23
         }
     }
 }
@@ -536,13 +524,7 @@ Sent when a notification is displayed.
                 "confidence":0.456
         },
         "campaign_id": "6009ff7c89bfa239ecce712e",
-        "techno_hash": "1qnn4irqfmghs",
-        "moments": {
-            "home": 0.56,
-            "office": 0.03,
-            "shopping": 0.02,
-            "other": 0.23
-        }
+        "techno_hash": "1qnn4irqfmghs"
     }
 }
 ```
