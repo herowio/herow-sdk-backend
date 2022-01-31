@@ -13,20 +13,154 @@ module.exports = async function (fastify, options) {
         properties: {
           adId: { type: 'string', minLength: 10 },
           customId: { type: 'string' },
-          optins: { type: 'array', 
+          optins: {
+            type: 'array',
             minItems: 1,
             maxItems: 1,
-            items: { type: 'object', 
-              properties: { 
+            items: {
+              type: 'object',
+              properties: {
                 type: { type: 'string', enum: [ 'USER_DATA' ] }, 
                 value: { type: 'boolean' } 
-              } 
-            } 
+              }
+            }
           },
-          location: { type: 'object',
+          location: {
+            type: 'object',
             properties: {
               status: { type: 'string', enum: [ 'ALWAYS', 'WHILE_IN_USE', 'NOT_DETERMINED', 'DENIED' ] },
               precision: { type: 'string', enum: [ 'FINE', 'COARSE' ] }
+            }
+          },
+          predictions: {
+            type: 'object',
+            properties: {
+              tags: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    tag: { type: 'string', minLength: 2 },
+                    pattern: {
+                      type: 'object',
+                      properties: {
+                        monday_early_morning: { type: 'number' },
+                        monday_late_morning: { type: 'number' },
+                        monday_lunch_time: { type: 'number' },
+                        monday_early_afternoon: { type: 'number' },
+                        monday_late_afternoon: { type: 'number' },
+                        monday_evening: { type: 'number' },
+                        monday_night: { type: 'number' },
+                        tuesday_early_morning: { type: 'number' },
+                        tuesday_late_morning: { type: 'number' },
+                        tuesday_lunch_time: { type: 'number' },
+                        tuesday_early_afternoon: { type: 'number' },
+                        tuesday_late_afternoon: { type: 'number' },
+                        tuesday_evening: { type: 'number' },
+                        tuesday_night: { type: 'number' },
+                        wednesday_early_morning: { type: 'number' },
+                        wednesday_late_morning: { type: 'number' },
+                        wednesday_lunch_time: { type: 'number' },
+                        wednesday_early_afternoon: { type: 'number' },
+                        wednesday_late_afternoon: { type: 'number' },
+                        wednesday_evening: { type: 'number' },
+                        wednesday_night: { type: 'number' },
+                        thursday_early_morning: { type: 'number' },
+                        thursday_late_morning: { type: 'number' },
+                        thursday_lunch_time: { type: 'number' },
+                        thursday_early_afternoon: { type: 'number' },
+                        thursday_late_afternoon: { type: 'number' },
+                        thursday_evening: { type: 'number' },
+                        thursday_night: { type: 'number' },
+                        friday_early_morning: { type: 'number' },
+                        friday_late_morning: { type: 'number' },
+                        friday_lunch_time: { type: 'number' },
+                        friday_early_afternoon: { type: 'number' },
+                        friday_late_afternoon: { type: 'number' },
+                        friday_evening: { type: 'number' },
+                        friday_night: { type: 'number' },
+                        saturday_early_morning: { type: 'number' },
+                        saturday_late_morning: { type: 'number' },
+                        saturday_lunch_time: { type: 'number' },
+                        saturday_early_afternoon: { type: 'number' },
+                        saturday_late_afternoon: { type: 'number' },
+                        saturday_evening: { type: 'number' },
+                        saturday_night: { type: 'number' },
+                        sunday_early_morning: { type: 'number' },
+                        sunday_late_morning: { type: 'number' },
+                        sunday_lunch_time: { type: 'number' },
+                        sunday_early_afternoon: { type: 'number' },
+                        sunday_late_afternoon: { type: 'number' },
+                        sunday_evening: { type: 'number' },
+                        sunday_night: { type: 'number' },
+                      }
+                    }
+                  }
+                }
+              },
+              zones: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    id: { type: 'string', minLength: 2 },
+                    pattern: {
+                      type: 'object',
+                      properties: {
+                        monday_early_morning: { type: 'number' },
+                        monday_late_morning: { type: 'number' },
+                        monday_lunch_time: { type: 'number' },
+                        monday_early_afternoon: { type: 'number' },
+                        monday_late_afternoon: { type: 'number' },
+                        monday_evening: { type: 'number' },
+                        monday_night: { type: 'number' },
+                        tuesday_early_morning: { type: 'number' },
+                        tuesday_late_morning: { type: 'number' },
+                        tuesday_lunch_time: { type: 'number' },
+                        tuesday_early_afternoon: { type: 'number' },
+                        tuesday_late_afternoon: { type: 'number' },
+                        tuesday_evening: { type: 'number' },
+                        tuesday_night: { type: 'number' },
+                        wednesday_early_morning: { type: 'number' },
+                        wednesday_late_morning: { type: 'number' },
+                        wednesday_lunch_time: { type: 'number' },
+                        wednesday_early_afternoon: { type: 'number' },
+                        wednesday_late_afternoon: { type: 'number' },
+                        wednesday_evening: { type: 'number' },
+                        wednesday_night: { type: 'number' },
+                        thursday_early_morning: { type: 'number' },
+                        thursday_late_morning: { type: 'number' },
+                        thursday_lunch_time: { type: 'number' },
+                        thursday_early_afternoon: { type: 'number' },
+                        thursday_late_afternoon: { type: 'number' },
+                        thursday_evening: { type: 'number' },
+                        thursday_night: { type: 'number' },
+                        friday_early_morning: { type: 'number' },
+                        friday_late_morning: { type: 'number' },
+                        friday_lunch_time: { type: 'number' },
+                        friday_early_afternoon: { type: 'number' },
+                        friday_late_afternoon: { type: 'number' },
+                        friday_evening: { type: 'number' },
+                        friday_night: { type: 'number' },
+                        saturday_early_morning: { type: 'number' },
+                        saturday_late_morning: { type: 'number' },
+                        saturday_lunch_time: { type: 'number' },
+                        saturday_early_afternoon: { type: 'number' },
+                        saturday_late_afternoon: { type: 'number' },
+                        saturday_evening: { type: 'number' },
+                        saturday_night: { type: 'number' },
+                        sunday_early_morning: { type: 'number' },
+                        sunday_late_morning: { type: 'number' },
+                        sunday_lunch_time: { type: 'number' },
+                        sunday_early_afternoon: { type: 'number' },
+                        sunday_late_afternoon: { type: 'number' },
+                        sunday_evening: { type: 'number' },
+                        sunday_night: { type: 'number' },
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
