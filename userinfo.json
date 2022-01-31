@@ -21,7 +21,7 @@
 		{
 			"tag": "Intermarche Contact",
 			"pattern": {
-				"monday_morning": 0.85,
+				"monday_early_morning": 0.85,
 				"friday_evening": 0.12
 			}
 		}],
